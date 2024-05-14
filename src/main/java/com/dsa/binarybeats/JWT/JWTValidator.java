@@ -1,6 +1,6 @@
 package com.dsa.binarybeats.JWT;
 
-import java.util.Base64;
+
 import java.util.List;
 
 import jakarta.servlet.FilterChain;
@@ -15,17 +15,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 import java.io.IOException;
 import java.security.Key;
@@ -34,7 +32,7 @@ import java.security.Key;
 @Component
 public class JWTValidator extends OncePerRequestFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = request.getHeader(JWTConstant.JWT_HEADER);
 
         if (jwt != null && jwt.startsWith("Bearer")) {
