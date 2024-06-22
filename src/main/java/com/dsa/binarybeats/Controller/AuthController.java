@@ -1,4 +1,5 @@
 package com.dsa.binarybeats.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -7,17 +8,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dsa.binarybeats.Entity.Cart;
 import com.dsa.binarybeats.Entity.User;
 import com.dsa.binarybeats.Exceptions.UserException;
 import com.dsa.binarybeats.JWT.JWTProvider;
 import com.dsa.binarybeats.Repository.UserRepo;
 import com.dsa.binarybeats.Request.LoginRequest;
 import com.dsa.binarybeats.Response.AuthResponse;
+import com.dsa.binarybeats.Service.CartService;
 import com.dsa.binarybeats.Service.CustomUserService;
 
 
@@ -27,13 +31,16 @@ import com.dsa.binarybeats.Service.CustomUserService;
 @RestController
 @RequestMapping("/auth")
 
-
+@CrossOrigin(origins = "http://localhost:5500")
 public class AuthController {
 
     private UserRepo userrepo;
     private JWTProvider jwtProvider;
     private PasswordEncoder passwordEncoder;
     private CustomUserService customUserService;
+
+    @Autowired
+    private CartService cartService;
     
 
     public AuthController(UserRepo u,JWTProvider j,PasswordEncoder p,CustomUserService c)
@@ -70,6 +77,7 @@ public class AuthController {
         createdUser.setPhoneNo(mobile);
 
         User saveduser=userrepo.save(createdUser);
+        Cart cart = cartService.CreateCart(saveduser);
         
 
         Authentication authentication=new UsernamePasswordAuthenticationToken(saveduser.getEmail(),saveduser.getPassword());    //Creates an authentication token

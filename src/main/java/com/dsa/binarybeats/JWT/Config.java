@@ -1,8 +1,8 @@
 package com.dsa.binarybeats.JWT;
+
 import java.util.Arrays;
 import java.util.Collections;
 import org.springframework.context.annotation.Bean;
-
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Configuration;
@@ -22,22 +22,22 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class Config {
 
+    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests((authorizeRequests) ->
-                        authorizeRequests
-                                .requestMatchers("/api/**").authenticated()
-                                .anyRequest().permitAll()
-                )
+        http.sessionManagement(
+                (sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests((authorizeRequests) -> authorizeRequests
+                        .anyRequest().permitAll())
                 .addFilterBefore(new JWTValidator(), BasicAuthenticationFilter.class)
                 .csrf((csrf) -> csrf.disable())
                 .cors(cors -> cors
                         .configurationSource(new CorsConfigurationSource() {
                             @Override
-                            public CorsConfiguration getCorsConfiguration(@SuppressWarnings("null") HttpServletRequest request) {
+                            public CorsConfiguration getCorsConfiguration(
+                                    @SuppressWarnings("null") HttpServletRequest request) {
                                 CorsConfiguration cfg = new CorsConfiguration();
-                                cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                                cfg.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/", "http://localhost:5500","http://127.0.0.1:5501/"));
                                 cfg.setAllowedMethods(Collections.singletonList("*"));
                                 cfg.setAllowCredentials(true);
                                 cfg.setAllowedHeaders(Collections.singletonList("*"));
@@ -48,7 +48,7 @@ public class Config {
                         }))
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults());
-        
+
         return http.build();
     }
 

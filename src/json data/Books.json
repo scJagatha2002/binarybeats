@@ -1,0 +1,29 @@
+{
+    "image_URL":"https://m.media-amazon.com/images/I/71nQNd3kQ6L._SL1500_.jpg",
+    "author":"AA Putembekar",
+    "title":"Data Structures & Algorithms for SPPU 19 Course",
+    "quantity":4,
+    "price":"510",
+    "discountedPercent":30,
+    "discountedPrice":357
+}
+
+{
+    "image_URL":"https://m.media-amazon.com/images/I/41iQjWxqQVL.jpg",
+    "author":"R Ventakesan",
+    "title":"Data Structures",
+    "quantity":4,
+    "price":608,
+    "discountedPercent":11,
+    "discountedPrice":539
+}
+
+{
+    "image_URL":"https://m.media-amazon.com/images/I/A1l5b1RPffL._SL1500_.jpg",
+    "author":"Narasimha Karumanchi",
+    "title":"Data Structures And Algorithms Made Easy:",
+    "quantity":4,
+    "price":608,
+    "discountedPercent":11,
+    "discountedPrice":539
+}

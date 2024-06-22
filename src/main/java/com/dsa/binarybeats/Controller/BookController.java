@@ -68,5 +68,11 @@ public class BookController {
         Page<List<BookResponse>> books = bookService.get_all_Book(page_no, paage_size);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<BookResponse> findBookHandler(@PathVariable long id) throws BookException {
+        BookResponse books = bookService.getBook(id);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
     
 }

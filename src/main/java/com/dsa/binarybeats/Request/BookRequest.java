@@ -7,6 +7,8 @@ public class BookRequest {
 
     private String title;
 
+    private String description;
+
     private int price;
 
     private int discountedPrice;

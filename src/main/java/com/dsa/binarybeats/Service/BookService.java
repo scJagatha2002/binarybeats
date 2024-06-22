@@ -34,13 +34,14 @@ public class BookService implements IBookService {
         book.setPrice(bookRequest.getPrice());
         book.setQuantity(bookRequest.getQuantity());
         book.setTitle(bookRequest.getTitle());
+        book.setDescription(bookRequest.getDescription());
 
         return bookRepo.save(book);
 
     }
 
     @Override
-    public void deleteBook(long bookId) throws BookException {
+    public void deleteBook(Long bookId) throws BookException {
         Optional<Books> book = bookRepo.findById(bookId);
         if (book.isEmpty()) {
             throw new BookException("Book not found");
@@ -49,7 +50,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Books updateBook(long bookId, BookRequest bookRequest) throws BookException {
+    public Books updateBook(Long bookId, BookRequest bookRequest) throws BookException {
         Optional<Books> isbook = bookRepo.findById(bookId);
         if (isbook.isEmpty()) {
             throw new BookException("Book not found");
@@ -62,6 +63,7 @@ public class BookService implements IBookService {
         book.setPrice(bookRequest.getPrice());
         book.setQuantity(bookRequest.getQuantity());
         book.setTitle(bookRequest.getTitle());
+        book.setDescription(bookRequest.getDescription());
 
         return bookRepo.save(book);
 
@@ -80,7 +82,9 @@ public class BookService implements IBookService {
             book.setPrice(bookRequest.getPrice());
             book.setQuantity(bookRequest.getQuantity());
             book.setTitle(bookRequest.getTitle());
+            book.setDescription(bookRequest.getDescription());
             books.add(book);
+            
         }
         return bookRepo.saveAll(books);
     }
@@ -97,6 +101,7 @@ public class BookService implements IBookService {
     List<List<BookResponse>> bookResponsesList = new ArrayList<>();
     for (Books book : filteredBooks.getContent()) {
         BookResponse bookResponse = new BookResponse();
+        bookResponse.setId(book.getId());
         bookResponse.setAuthor(book.getAuthor());
         bookResponse.setDiscountedPercent(book.getDiscountedPercent());
         bookResponse.setDiscountedPrice(book.getDiscountedPrice());
@@ -104,6 +109,7 @@ public class BookService implements IBookService {
         bookResponse.setPrice(book.getPrice());
         bookResponse.setQuantity(book.getQuantity());
         bookResponse.setTitle(book.getTitle());
+        bookResponse.setDescription(book.getDescription());
         
         List<BookResponse> singleResponseList = new ArrayList<>();
         singleResponseList.add(bookResponse);
@@ -111,6 +117,31 @@ public class BookService implements IBookService {
     }
     
     return new PageImpl<>(bookResponsesList, pageable, books.size());
+    }
+
+    @Override
+    public BookResponse getBook(Long bookId) throws BookException{
+        Optional<Books> book = bookRepo.findById(bookId);
+        if (book.isEmpty()) {
+            throw new BookException("Book not found");
+        }
+        BookResponse bookResponse = new BookResponse();
+        bookResponse.setAuthor(book.get().getAuthor());
+        bookResponse.setDiscountedPercent(book.get().getDiscountedPercent());
+        bookResponse.setDiscountedPrice(book.get().getDiscountedPrice());
+        bookResponse.setId(book.get().getId());
+        bookResponse.setImage_URL(book.get().getImage_URL());
+        bookResponse.setPrice(book.get().getPrice());
+        bookResponse.setQuantity(book.get().getQuantity());
+        bookResponse.setTitle(book.get().getTitle());
+        bookResponse.setDescription(book.get().getDescription());
+        return bookResponse;
+        
+    }
+
+    @Override
+    public Books getBook2(Long bookId) {
+        return bookRepo.findById(bookId).get();
     }
 
 }

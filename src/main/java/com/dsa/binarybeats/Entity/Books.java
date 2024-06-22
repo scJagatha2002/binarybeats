@@ -1,10 +1,8 @@
 package com.dsa.binarybeats.Entity;
 
-
 import java.util.ArrayList;
 
 import java.util.List;
-
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,40 +20,39 @@ public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    
+    @Column(name = "description")
+    private String description;
 
-    @Column(name="price")
+    @Column(name = "price")
     private int price;
 
-    @Column(name="discount_price")
+    @Column(name = "discount_price")
     private int discountedPrice;
 
-    @Column(name="discount_percent")
+    @Column(name = "discount_percent")
     private int discountedPercent;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name="author")
+    @Column(name = "author")
     private String author;
 
-    
-    @Column(name="image_url")
+    @Column(name = "image_url")
     private String image_URL;
 
-    @OneToMany(mappedBy="books",cascade=CascadeType.ALL,orphanRemoval = true)
-    private List<Rating> ratings=new ArrayList<>();
+    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
 
-    @OneToMany(mappedBy="books",cascade=CascadeType.ALL,orphanRemoval = true)
-    private List<Review> review=new ArrayList<>();
+    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> review = new ArrayList<>();
 
-    @Column(name="num_Ratings")
+    @Column(name = "num_Ratings")
     private int numRatings;
 
-    
 }

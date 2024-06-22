@@ -40,6 +40,8 @@ public class CodeService implements ICodeService {
             code.setDescription(codeRequest.getDescription());
             code.setDifficulty(difficulty.get());
             code.setTopic(codeRequest.getTopic());
+            code.setReferenceLink(codeRequest.getReferenceLink());
+            code.setSolutionLink(codeRequest.getSolutionLink());
             codeRepo.save(code);
         }
         return code;
@@ -72,6 +74,8 @@ public class CodeService implements ICodeService {
         code.get().setDifficulty(difficulty.get());
         code.get().setDescription(codeRequest.getDescription());
         code.get().setTopic(codeRequest.getTopic());
+        code.get().setReferenceLink(codeRequest.getReferenceLink());
+        code.get().setSolutionLink(codeRequest.getSolutionLink());
         codeRepo.save(code.get());
         return code.get();
 
@@ -92,6 +96,8 @@ public class CodeService implements ICodeService {
             code.setDifficulty(difficultyRepo.findById(codeRequest.getDifficulty_id()).get());
             code.setTopic(codeRequest.getTopic());
             code.setDescription(codeRequest.getDescription());
+            code.setReferenceLink(codeRequest.getReferenceLink());
+            code.setSolutionLink(codeRequest.getReferenceLink());
             codeRepo.save(code);
             codes.add(code);
         }
@@ -116,6 +122,8 @@ public Page<List<CodeResponse>> get_all_code(String topic, String sort, String d
         codeResponse.setDescription(code.getDescription());
         codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
         codeResponse.setTopic(code.getTopic());
+        codeResponse.setReferenceLink(code.getReferenceLink());
+        codeResponse.setSolutionLink(code.getSolutionLink());
         
         List<CodeResponse> singleResponseList = new ArrayList<>();
         singleResponseList.add(codeResponse);

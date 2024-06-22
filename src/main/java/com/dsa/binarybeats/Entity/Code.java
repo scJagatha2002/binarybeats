@@ -1,7 +1,6 @@
 package com.dsa.binarybeats.Entity;
 
-
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +19,15 @@ public class Code {
     private String topic;
 
     private String Description;
-    
+
     @ManyToOne
     private Difficulty_level Difficulty;
-    
+
+    @Column(columnDefinition = "TEXT")
     private String Code;
 
-    
+    private String referenceLink;
+
+    private String solutionLink;
+
 }

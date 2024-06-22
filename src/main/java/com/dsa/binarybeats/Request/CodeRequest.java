@@ -9,5 +9,7 @@ public class CodeRequest {
     private long difficulty_id;
     private String code;
     private String description;
+    private String referenceLink;
+    private String solutionLink;
 
 }

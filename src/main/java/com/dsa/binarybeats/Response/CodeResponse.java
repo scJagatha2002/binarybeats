@@ -9,5 +9,7 @@ public class CodeResponse {
     private String description;
     private String difficulty_id;
     private String code;
+    private String referenceLink;
+    private String solutionLink;
     
 }
