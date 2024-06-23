@@ -67,7 +67,7 @@ public class CodeController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<List<CodeResponse>>> findCodessHandler(@RequestParam String topic, @RequestParam String sort,@RequestParam String difficulty,  @RequestParam Integer page_no, @RequestParam Integer paage_size) {
+    public ResponseEntity<Page<List<CodeResponse>>> findCodessHandler(@RequestParam List<String> topic, @RequestParam String sort,@RequestParam List<String> difficulty,  @RequestParam Integer page_no, @RequestParam Integer paage_size) {
         Page<List<CodeResponse>> codes = codeService.get_all_code(topic, sort, difficulty, page_no, paage_size);
         return new ResponseEntity<>(codes, HttpStatus.OK);
     }

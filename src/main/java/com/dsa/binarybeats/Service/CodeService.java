@@ -42,6 +42,7 @@ public class CodeService implements ICodeService {
             code.setTopic(codeRequest.getTopic());
             code.setReferenceLink(codeRequest.getReferenceLink());
             code.setSolutionLink(codeRequest.getSolutionLink());
+            code.setTitle(codeRequest.getTitle());
             codeRepo.save(code);
         }
         return code;
@@ -76,6 +77,7 @@ public class CodeService implements ICodeService {
         code.get().setTopic(codeRequest.getTopic());
         code.get().setReferenceLink(codeRequest.getReferenceLink());
         code.get().setSolutionLink(codeRequest.getSolutionLink());
+        code.get().setTitle(codeRequest.getTitle());
         codeRepo.save(code.get());
         return code.get();
 
@@ -98,6 +100,7 @@ public class CodeService implements ICodeService {
             code.setDescription(codeRequest.getDescription());
             code.setReferenceLink(codeRequest.getReferenceLink());
             code.setSolutionLink(codeRequest.getReferenceLink());
+            code.setTitle(codeRequest.getTitle());
             codeRepo.save(code);
             codes.add(code);
         }
@@ -106,32 +109,120 @@ public class CodeService implements ICodeService {
     }
 
     @Override
-public Page<List<CodeResponse>> get_all_code(String topic, String sort, String difficulty, Integer page_no,
-        Integer paage_size) {
-    Pageable pageable = PageRequest.of(page_no, paage_size);
-    List<Code> codes = codeRepo.filterAndSort(topic, difficulty, sort);
-    int startIdx = (int) pageable.getOffset();
-    int endIdx = Math.min(startIdx + pageable.getPageSize(), codes.size());
-    List<Code> pageContent = codes.subList(startIdx, endIdx);
-    Page<Code> filteredCodes = new PageImpl<>(pageContent, pageable, codes.size());
-    
-    List<List<CodeResponse>> codeResponsesList = new ArrayList<>();
-    for (Code code : filteredCodes.getContent()) {
-        CodeResponse codeResponse = new CodeResponse();
-        codeResponse.setCode(code.getCode());
-        codeResponse.setDescription(code.getDescription());
-        codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
-        codeResponse.setTopic(code.getTopic());
-        codeResponse.setReferenceLink(code.getReferenceLink());
-        codeResponse.setSolutionLink(code.getSolutionLink());
-        
-        List<CodeResponse> singleResponseList = new ArrayList<>();
-        singleResponseList.add(codeResponse);
-        codeResponsesList.add(singleResponseList);
-    }
-    
-    return new PageImpl<>(codeResponsesList, pageable, codes.size());
-}
+    public Page<List<CodeResponse>> get_all_code(List<String> topic, String sort, List<String> difficulty,
+            Integer page_no,
+            Integer paage_size) {
 
+        if (topic.isEmpty() && difficulty.isEmpty()) {
+            Pageable pageable = PageRequest.of(page_no, paage_size);
+            List<Code> codes = codeRepo.findAll(sort);
+            int startIdx = (int) pageable.getOffset();
+            int endIdx = Math.min(startIdx + pageable.getPageSize(), codes.size());
+            List<Code> pageContent = codes.subList(startIdx, endIdx);
+            Page<Code> filteredCodes = new PageImpl<>(pageContent, pageable, codes.size());
+
+            List<List<CodeResponse>> codeResponsesList = new ArrayList<>();
+            for (Code code : filteredCodes.getContent()) {
+                CodeResponse codeResponse = new CodeResponse();
+                codeResponse.setCode(code.getCode());
+                codeResponse.setDescription(code.getDescription());
+                codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
+                codeResponse.setTopic(code.getTopic());
+                codeResponse.setReferenceLink(code.getReferenceLink());
+                codeResponse.setSolutionLink(code.getSolutionLink());
+                codeResponse.setTitle(code.getTitle());
+
+                List<CodeResponse> singleResponseList = new ArrayList<>();
+                singleResponseList.add(codeResponse);
+                codeResponsesList.add(singleResponseList);
+            }
+
+            return new PageImpl<>(codeResponsesList, pageable, codes.size());
+        } 
+        else if(!topic.isEmpty() && difficulty.isEmpty()){
+
+            Pageable pageable = PageRequest.of(page_no, paage_size);
+            List<Code> codes = codeRepo.filterOnTopicAndSort(topic, sort);
+            int startIdx = (int) pageable.getOffset();
+            int endIdx = Math.min(startIdx + pageable.getPageSize(), codes.size());
+            List<Code> pageContent = codes.subList(startIdx, endIdx);
+            Page<Code> filteredCodes = new PageImpl<>(pageContent, pageable, codes.size());
+
+            List<List<CodeResponse>> codeResponsesList = new ArrayList<>();
+            for (Code code : filteredCodes.getContent()) {
+                CodeResponse codeResponse = new CodeResponse();
+                codeResponse.setCode(code.getCode());
+                codeResponse.setDescription(code.getDescription());
+                codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
+                codeResponse.setTopic(code.getTopic());
+                codeResponse.setReferenceLink(code.getReferenceLink());
+                codeResponse.setSolutionLink(code.getSolutionLink());
+                codeResponse.setTitle(code.getTitle());
+
+                List<CodeResponse> singleResponseList = new ArrayList<>();
+                singleResponseList.add(codeResponse);
+                codeResponsesList.add(singleResponseList);
+            }
+
+            return new PageImpl<>(codeResponsesList, pageable, codes.size());
+
+        }
+        else if(topic.isEmpty() && !difficulty.isEmpty()){
+
+            Pageable pageable = PageRequest.of(page_no, paage_size);
+            List<Code> codes = codeRepo.filterOnDifficultyAndSort(difficulty, sort);
+            int startIdx = (int) pageable.getOffset();
+            int endIdx = Math.min(startIdx + pageable.getPageSize(), codes.size());
+            List<Code> pageContent = codes.subList(startIdx, endIdx);
+            Page<Code> filteredCodes = new PageImpl<>(pageContent, pageable, codes.size());
+
+            List<List<CodeResponse>> codeResponsesList = new ArrayList<>();
+            for (Code code : filteredCodes.getContent()) {
+                CodeResponse codeResponse = new CodeResponse();
+                codeResponse.setCode(code.getCode());
+                codeResponse.setDescription(code.getDescription());
+                codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
+                codeResponse.setTopic(code.getTopic());
+                codeResponse.setReferenceLink(code.getReferenceLink());
+                codeResponse.setSolutionLink(code.getSolutionLink());
+                codeResponse.setTitle(code.getTitle());
+
+                List<CodeResponse> singleResponseList = new ArrayList<>();
+                singleResponseList.add(codeResponse);
+                codeResponsesList.add(singleResponseList);
+            }
+
+            return new PageImpl<>(codeResponsesList, pageable, codes.size());
+
+        }
+            else {
+            Pageable pageable = PageRequest.of(page_no, paage_size);
+            List<Code> codes = codeRepo.filterAndSort(topic, difficulty, sort);
+            int startIdx = (int) pageable.getOffset();
+            int endIdx = Math.min(startIdx + pageable.getPageSize(), codes.size());
+            List<Code> pageContent = codes.subList(startIdx, endIdx);
+            Page<Code> filteredCodes = new PageImpl<>(pageContent, pageable, codes.size());
+
+            List<List<CodeResponse>> codeResponsesList = new ArrayList<>();
+            for (Code code : filteredCodes.getContent()) {
+                CodeResponse codeResponse = new CodeResponse();
+                codeResponse.setCode(code.getCode());
+                codeResponse.setDescription(code.getDescription());
+                codeResponse.setDifficulty_id(code.getDifficulty().getDifficulty_name());
+                codeResponse.setTopic(code.getTopic());
+                codeResponse.setReferenceLink(code.getReferenceLink());
+                codeResponse.setSolutionLink(code.getSolutionLink());
+                codeResponse.setTitle(code.getTitle());
+
+                List<CodeResponse> singleResponseList = new ArrayList<>();
+                singleResponseList.add(codeResponse);
+                codeResponsesList.add(singleResponseList);
+            }
+
+            return new PageImpl<>(codeResponsesList, pageable, codes.size());
+        }
+        
+
+    }
 
 }

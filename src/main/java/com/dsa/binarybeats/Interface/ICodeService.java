@@ -19,5 +19,5 @@ public interface ICodeService {
 
     List<Code> addMultipleCode(List<CodeRequest> codeRequests);
 
-    Page<List<CodeResponse>> get_all_code(String topic, String sort, String difficulty, Integer page_no, Integer paage_size);
+    Page<List<CodeResponse>> get_all_code(List<String> topic, String sort, List<String> difficulty, Integer page_no, Integer paage_size);
 }

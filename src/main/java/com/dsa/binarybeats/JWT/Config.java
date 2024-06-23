@@ -37,7 +37,7 @@ public class Config {
                             public CorsConfiguration getCorsConfiguration(
                                     @SuppressWarnings("null") HttpServletRequest request) {
                                 CorsConfiguration cfg = new CorsConfiguration();
-                                cfg.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/", "http://localhost:5500","http://127.0.0.1:5501/"));
+                                cfg.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500/", "http://localhost:5500","http://127.0.0.1:5501/","http://127.0.0.1:5500/"));
                                 cfg.setAllowedMethods(Collections.singletonList("*"));
                                 cfg.setAllowCredentials(true);
                                 cfg.setAllowedHeaders(Collections.singletonList("*"));

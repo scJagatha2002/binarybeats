@@ -30,4 +30,6 @@ public class Code {
 
     private String solutionLink;
 
+    private String title;
+
 }

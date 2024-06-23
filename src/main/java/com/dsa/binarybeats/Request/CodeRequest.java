@@ -11,5 +11,6 @@ public class CodeRequest {
     private String description;
     private String referenceLink;
     private String solutionLink;
+    private String title;
 
 }

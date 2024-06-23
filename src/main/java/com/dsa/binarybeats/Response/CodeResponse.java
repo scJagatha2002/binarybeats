@@ -11,5 +11,6 @@ public class CodeResponse {
     private String code;
     private String referenceLink;
     private String solutionLink;
+    private String title;
     
 }
